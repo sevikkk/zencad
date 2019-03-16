@@ -108,7 +108,7 @@ class DisplayWidget(QWidget):
 
 			self.viewer = zencad.Viewer(self.scene)
 			self.view = self.viewer.create_view()
-			self.view.set_window(self.winId())
+			self.view.set_window(int(self.winId()))
 			self.view.set_gradient()
 			
 			self.set_orient1()

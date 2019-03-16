@@ -26,7 +26,7 @@ import threading
 import zencad.opengl
 
 import runpy
-import inotify.adapters
+#import inotify.adapters
 import math
 
 import zencad.texteditor
@@ -144,8 +144,8 @@ class InotifyThread(QThread):
 		if self.notifier is not None:
 			self.notifier.remove_watch(self.watching)
 
-		self.notifier = inotify.adapters.Inotify()
-		self.notifier.add_watch(path)
+		#self.notifier = inotify.adapters.Inotify()
+		#self.notifier.add_watch(path)
 		self.watching = path
 		self.path = path
 		self.restart = True
