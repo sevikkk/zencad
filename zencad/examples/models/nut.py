@@ -32,7 +32,7 @@ def metric_nut(d, step, h):
     H = step * math.tan(deg(60))
     drad = d / 2 - 3 / 8 * H
     cil = cylinder(r=d / 2, h=h)
-    instr = instrument_metric_nut(drad=drad, step=step, h=h + step)
+    instr = instrument_metric_nut(drad=drad + 0.1, step=step, h=h + step)
     ret = cil - instr
 
     return ret
