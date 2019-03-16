@@ -147,14 +147,11 @@ class InotifyThread(QThread):
 
     def init_notifier(self, path):
         self.path = path
-        self.restart = True
 
         if not self.isRunning():
             self.start()
 
     def run(self):
-        self.restart = False
-
         try:
             last_stat = os.stat(self.path)
             while 1:
@@ -165,10 +162,7 @@ class InotifyThread(QThread):
                     print("widget: {} was rewriten. rerun initial.".format(self.path))
                     self.rerun()
                     last_stat = new_stat
-                if self.restart:
-                    self.restart = False
-                    break
-                time.sleep(0.3)
+                time.sleep(0.1)
         except Exception as e:
             print("Warning: Rerun thread was finished:", e)
 
