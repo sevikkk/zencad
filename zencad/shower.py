@@ -27,7 +27,6 @@ import zencad.opengl
 
 import runpy
 
-# import inotify.adapters
 import math
 
 import zencad.texteditor
@@ -144,16 +143,9 @@ class InotifyThread(QThread):
 
     def __init__(self, parent):
         QThread.__init__(self, parent)
-        self.notifier = None
-        self.watching = None
+        self.path = None
 
     def init_notifier(self, path):
-        if self.notifier is not None:
-            self.notifier.remove_watch(self.watching)
-
-        # self.notifier = inotify.adapters.Inotify()
-        # self.notifier.add_watch(path)
-        self.watching = path
         self.path = path
         self.restart = True
 
@@ -164,19 +156,19 @@ class InotifyThread(QThread):
         self.restart = False
 
         try:
+            last_stat = os.stat(self.path)
             while 1:
-                for event in self.notifier.event_gen():
-                    if event is not None:
-                        if "IN_CLOSE_WRITE" in event[1]:
-                            print(
-                                "widget: {} was rewriten. rerun initial.".format(
-                                    self.path
-                                )
-                            )
-                            self.rerun()
-                    if self.restart:
-                        self.restart = False
-                        break
+                new_stat = os.stat(self.path)
+                if (new_stat.st_ino != last_stat.st_ino) or (
+                    new_stat.st_mtime != last_stat.st_mtime
+                ):
+                    print("widget: {} was rewriten. rerun initial.".format(self.path))
+                    self.rerun()
+                    last_stat = new_stat
+                if self.restart:
+                    self.restart = False
+                    break
+                time.sleep(0.3)
         except Exception as e:
             print("Warning: Rerun thread was finished:", e)
 
