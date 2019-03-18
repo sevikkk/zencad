@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-#coding: utf-8
+# coding: utf-8
 
 from zencad import *
 import evalcache
 import functools
-lazy.diag = True 
 
-ng = ngon(r = 10, n = 6)
+lazy.diag = True
+
+ng = ngon(r=10, n=6)
 radius = 4
 radius2 = 8
 
@@ -16,7 +17,7 @@ print(ng.vertices().unlazy())
 
 # Fillter all vertices
 print("m1:")
-m1 = ngon(r = 10, n = 6).fillet(radius)
+m1 = ngon(r=10, n=6).fillet(radius)
 m1.unlazy()
 
 # Generator can be used for array filtering
@@ -36,15 +37,20 @@ m4.unlazy()
 
 # Advanced version with indexing of sorted array of points
 print("m5:")
-def comparator(a,b):
-	"""sort by yx_order"""
-	xdiff = a.x - b.x
-	ydiff = a.y - b.y
 
-	if abs(ydiff) > 0.001: return ydiff
-	if abs(xdiff) > 0.001: return xdiff
 
-	return 0
+def comparator(a, b):
+    """sort by yx_order"""
+    xdiff = a.x - b.x
+    ydiff = a.y - b.y
+
+    if abs(ydiff) > 0.001:
+        return ydiff
+    if abs(xdiff) > 0.001:
+        return xdiff
+
+    return 0
+
 
 vtxs = sorted(ng.vertices(), key=functools.cmp_to_key(comparator))
 m5 = fillet(ng, radius, [vtxs[0], vtxs[3], vtxs[4]])

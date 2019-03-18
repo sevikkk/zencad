@@ -10,6 +10,6 @@ from PyQt5.QtGui import *
 
 scn = zencad.Scene()
 
-scn.add(zencad.box(20,20,20).unlazy())
+scn.add(zencad.box(20, 20, 20).unlazy())
 
 zencad.show(scn)

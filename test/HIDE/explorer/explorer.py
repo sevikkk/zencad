@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-#coding: utf-8
+# coding: utf-8
 
 import sys
+
 sys.path.insert(0, "../..")
 
 import zencad
@@ -17,8 +18,8 @@ m = face.square(30).fillet(6).wires()[0]
 exp = m.vertexs()
 
 for i in range(len(exp)):
-	print(exp[i])
-	display(exp[i])
+    print(exp[i])
+    display(exp[i])
 
 display(m)
 
