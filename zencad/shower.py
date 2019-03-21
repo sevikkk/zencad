@@ -947,14 +947,14 @@ class update_loop(QThread):
                 zencad.lazy.decache = desave
                 zencad.lazy.diag = diag
 
-                mutex = QMutex()
+                #mutex = QMutex()
                 self.wdg.animate_updated.clear()
                 self.after_update_signal.emit()
                 if self.cancelled:
-                    mutex.unlock()
+                    #mutex.unlock()
                     return
                 self.wdg.animate_updated.wait()
-                mutex.unlock()
+                #mutex.unlock()
 
                 if self.cancelled:
                     return
