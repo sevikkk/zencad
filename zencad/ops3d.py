@@ -44,6 +44,10 @@ def revol(shp, yaw=0.0):
 def thicksolid(shp, t, refs):
     return pyservoce.thicksolid(shp, points(refs), t)
 
+@lazy.lazy(cls=shape_generator)
+def unify(shp):
+    return pyservoce.unify(shp)
+
 
 @lazy.lazy(cls=shape_generator)
 def fillet(shp, r, refs=None):
